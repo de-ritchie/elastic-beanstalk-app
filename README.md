@@ -1,0 +1,25 @@
+### CI/CD using AWS for Node.js
+-	AWS tools which we'll use are
+	-	CodeBuild
+	-	Elastic Beanstalk
+	-	CodePipeline
+-	Source code can be integrated using Git
+-	CodeBuild can be used for building the code and VPC has to be configured if there are any dependency on services
+	-   Because codebuild happens in a different VPC
+-	Elastic Beanstalk can be used to deploy the application.
+    -   Environment variables can be used
+	-	```NODE_ENV=production``` => env variable helps to execute the => npm inistall
+-	First a CodeBuild project have to be created and mention the source code(i.e., git or CodeCommit)
+	-	```buildspec.yml``` has to be added to Node.js project
+	-	env variables can be configured
+	-	The logs can be streamed to cloudwatch
+	-	After configuring we can run a build
+-	Secondly create a Beanstalk application & environment for sample Node.js code
+	-	Configure to have High Availability because otherwise by default it'll create a server and attach a Elastic IP
+	-	We can configure different type of deployments
+	-	Prefer rolling update than all at once
+-	Finally create a CodePipeline, 
+	-	configure the source as Git, 
+	-	add a build stage and configure CodeBuild project which was created
+	-	add a deploy stage and configure to Elastic Beanstalk application & environment which were created
+-	We can access the application using Load balancer's DNS/Elastic Beanstalk DNS
